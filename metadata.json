@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Opshora",
+  "description": "A premium fashion e-commerce platform.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

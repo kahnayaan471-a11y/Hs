@@ -1,0 +1,83 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A registered user in the system",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique ID of the user" },
+        "email": { "type": "string", "format": "email", "description": "The email address of the user" },
+        "displayName": { "type": "string", "description": "The display name of the user" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the user registered" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "A purchase made by a user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "The ID of the user who placed the order" },
+        "userEmail": { "type": "string", "description": "The email of the user who placed the order" },
+        "userName": { "type": "string", "description": "The name of the user who placed the order" },
+        "items": { "type": "array", "description": "The items in the order" },
+        "total": { "type": "number", "description": "The total price of the order" },
+        "status": { "type": "string", "enum": ["Ordered", "Shipping", "Out for Delivery", "Delivered", "Cancelled"], "description": "The current status of the order" },
+        "address": { "type": "object", "description": "The delivery address" },
+        "paymentMethod": { "type": "string", "description": "The method of payment" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the order was placed" }
+      },
+      "required": ["userId", "items", "total", "status", "address", "createdAt"]
+    },
+    "PromoCode": {
+      "title": "PromoCode",
+      "description": "A discount code",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "description": "The promo code string" },
+        "discount": { "type": "number", "description": "The discount amount or percentage" },
+        "type": { "type": "string", "enum": ["fixed", "percentage"], "description": "The type of discount" },
+        "active": { "type": "boolean", "description": "Whether the code is active" }
+      },
+      "required": ["code", "discount", "type", "active"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "A product review",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "number", "description": "The ID of the product being reviewed" },
+        "userId": { "type": "string", "description": "The ID of the user who wrote the review" },
+        "userName": { "type": "string", "description": "The name of the user who wrote the review" },
+        "userPhoto": { "type": "string", "description": "The photo URL of the user who wrote the review" },
+        "rating": { "type": "number", "description": "The rating given to the product" },
+        "text": { "type": "string", "description": "The review text" },
+        "isAdminReview": { "type": "boolean", "description": "Whether the review was created by an admin" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the review was created" }
+      },
+      "required": ["productId", "userName", "rating", "text", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile information"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Order records"
+    },
+    "/promoCodes/{codeId}": {
+      "schema": "PromoCode",
+      "description": "Promo codes"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Product reviews"
+    },
+    "/settings/{settingId}": {
+      "schema": "object",
+      "description": "General application settings"
+    }
+  }
+}
